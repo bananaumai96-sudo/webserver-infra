@@ -5,9 +5,12 @@
 *.tfstate
 *.tfstate.*
 
-# Variable files (may contain sensitive values)
+# Variable files
 *.tfvars
 *.tfvars.json
+
+#排除しない
+!terraform.tfvars.example 
 
 # Crash logs
 crash.log
