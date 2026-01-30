@@ -60,6 +60,7 @@ terraform plan
 terraform apply
 
 # ディレクトリ構成
+```
 webserver-infra/
 ├─ README.md
 ├─ .gitignore                     # GitHubに不要ファイル排除用
@@ -75,3 +76,4 @@ webserver-infra/
 │
 └─ docs/
    └─architecture.png 　          # 構成図
+```
