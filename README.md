@@ -72,8 +72,18 @@ webserver-infra/
 │   ├─ terraform.tfvars           # 変数値ファイル
 │   ├─ terraform.tfvars.example　 # 変数値ファイル設定例
 │   ├─ locals.tf                  # 共通タグ用
-│   └─ .terraform.lock.hcl
-│
-└─ docs/
-   └─architecture.png 　          # 構成図
+│   ├─ .terraform.lock.hcl
+│   └─ modules/                   #modules用
+│  　     └─main/                 #基盤部分作成用
+│            ├─igw.tf             # インターネットゲートウェイ
+│            ├─nat.tf             # NATゲートウェイ
+│            ├─output.tf          # root_module出力用
+│            ├─route_table.tf     # ルートテーブル
+│            ├─sg.tf              # セキュリティゲートウェイ
+│            ├─subnet.tf          # サブネット
+│            ├─variables.tf       # 変数定義
+│            └─vpc.tf             # VPC
+├─ docs/
+│  　└─architecture.png 　          # 構成図
+└─ terraform-boosttrap/            # terraform構築権限用
 ```
