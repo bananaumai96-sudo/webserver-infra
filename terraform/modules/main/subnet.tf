@@ -6,7 +6,7 @@ resource "aws_subnet" "public" {
   cidr_block = cidrsubnet(aws_vpc.webserver.cidr_block,8,index(var.availability_zones,each.value) + 10)
   map_public_ip_on_launch = true
   assign_ipv6_address_on_creation = false
-  tags = merge(var.tag,{Name = "webserver-private-subnet-${split("-",each.value)[2]}"})
+  tags = merge(var.tag,{Name = "webserver-public-subnet-${split("-",each.value)[2]}"})
 }
 
 #privateサブネット作成

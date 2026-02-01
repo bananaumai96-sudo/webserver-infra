@@ -21,6 +21,7 @@ resource "aws_route_table_association" "public" {
 
 # private用ルートテーブル作成
 resource "aws_route_table" "private" {
+  for_each = aws_subnet.private
   vpc_id = aws_vpc.webserver.id
   tags = merge(var.tag,{Name = "webserver-private-route-table"})
 
@@ -28,14 +29,15 @@ resource "aws_route_table" "private" {
 
 # デフォルトルート 0.0.0.0/0 → Nat
 resource "aws_route" "private_nat" {
-  route_table_id         = aws_route_table.private.id
+  for_each = aws_subnet.private
+  route_table_id         = aws_route_table.private[each.key].id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.webserver.id
+  nat_gateway_id         = aws_nat_gateway.webserver[each.key].id
 }
 
 # private subnet に紐付け
 resource "aws_route_table_association" "private" {
   for_each       = aws_subnet.private
   subnet_id      = each.value.id
-  route_table_id = aws_route_table.private.id
+  route_table_id = aws_route_table.private[each.key].id
 }
