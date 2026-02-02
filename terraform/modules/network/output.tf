@@ -1,7 +1,6 @@
 output "vpc_id"{
     description = "VPC_ID"
     value = aws_vpc.webserver.id
-
 }
 
 output "vpc_cidr"{
@@ -21,11 +20,11 @@ output "private_subnet"{
 
 output "security_group_alb"{
     description = "security_groups_alb"
-    value = aws_security_group.alb.id
+    value = aws_security_group.alb
 }
 
 output "security_group_ec2"{
     description = "security_groups_ec2"
-    value = aws_security_group.ec2_private.id
+    value = aws_security_group.ec2_private
 }
 
