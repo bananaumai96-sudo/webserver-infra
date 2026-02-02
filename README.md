@@ -1,6 +1,6 @@
 # WebServer Infra - AWS Portfolio
 
-ポートフォリオ用に作成した **AWS 上での Web サーバー構築・インフラ自動化** リポジトリです
+ポートフォリオ用に作成した **AWS 上での Web サーバー構築・インフラ自動化** リポジトリです（2026/2/2現在　作成中）
 
 ---
 
@@ -66,7 +66,12 @@ webserver-infra/
 ├─ .gitignore                     # GitHubに不要ファイル排除用
 ├─ terraform/                     # Terraform構成
 │   ├─ backend.tf                 # .tfstate保管用
-│   ├─ main.tf      　            # VPC,Subnet,Route
+│   ├─ network.tf   　            # network作成用
+│   ├─ ec2.tf   　                # ec2作成用
+│   ├─ alb.tf   　                # alb作成用
+│   ├─ alb_listener.tf            # albリスナー作成用
+│   ├─ tg.tf   　                 # ターゲットグループ作成用
+│   ├─ data.tf      　            # 作成リソース情報取得用
 │   ├─ providers.tf 　            # リージョン用
 │   ├─ variables.tf 　            # 変数定義
 │   ├─ terraform.tfvars           # 変数値ファイル
@@ -74,7 +79,7 @@ webserver-infra/
 │   ├─ locals.tf                  # 共通タグ用
 │   ├─ .terraform.lock.hcl
 │   └─ modules/                   #modules用
-│  　     └─main/                 #基盤部分作成用
+│  　     └─network/              #基盤部分作成用
 │            ├─igw.tf             # インターネットゲートウェイ
 │            ├─nat.tf             # NATゲートウェイ
 │            ├─output.tf          # root_module出力用

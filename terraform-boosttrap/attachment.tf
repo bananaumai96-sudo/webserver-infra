@@ -42,3 +42,8 @@ resource "aws_iam_role_policy_attachment" "eip" {
   role       = aws_iam_role.terraform_exec.name
   policy_arn = aws_iam_policy.eip_action.arn
 }
+
+resource "aws_iam_role_policy_attachment" "elb" {
+  role       = aws_iam_role.terraform_exec.name
+  policy_arn = aws_iam_policy.elb_action.arn
+}
