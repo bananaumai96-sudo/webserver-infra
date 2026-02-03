@@ -1,0 +1,24 @@
+# Terraform working directory
+**/.terraform/*
+
+# Terraform state files
+*.tfstate
+*.tfstate.*
+
+# Variable files
+*.tfvars
+*.tfvars.json
+
+#排除しない
+!terraform.tfvars.example 
+
+# Crash logs
+crash.log
+crash.*.log
+
+# Plan output
+*.tfplan
+
+# OS / Editor
+.DS_Store
+.vscode/
