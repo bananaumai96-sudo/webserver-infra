@@ -6,6 +6,10 @@ locals {
         "ec2:StopInstances",
         "ec2:RebootInstances",
         "ec2:DescribeInstances",
+        "ec2:CreateLaunchTemplate",
+        "ec2:DeleteLaunchTemplate",
+        "ec2:ModifyInstanceAttribute",
+        "ec2:CreateLaunchTemplateVersion"
     ]
     
     EC2_Describe_Actions = [
@@ -15,8 +19,9 @@ locals {
         "ec2:DescribeNetworkInterfaces",
         "ec2:DescribeInstanceAttribute",
         "ec2:DescribeVolumes",
-        "ec2:DescribeInstanceCreditSpecifications"
-
+        "ec2:DescribeInstanceCreditSpecifications",
+        "ec2:DescribeLaunchTemplates",
+        "ec2:DescribeLaunchTemplateVersions"
     ]
 
     EC2_Tagging = [
@@ -115,6 +120,21 @@ locals {
         "elasticloadbalancing:DescribeTargetGroupAttributes",
         "elasticloadbalancing:DescribeListenerAttributes",
         "elasticloadbalancing:DescribeTargetHealth"
+    ]
+
+    asg_Actions = [
+        "autoscaling:CreateAutoScalingGroup",
+        "autoscaling:UpdateAutoScalingGroup",
+        "autoscaling:DeleteAutoScalingGroup",
+        "autoscaling:PutScalingPolicy",
+        "autoscaling:DeletePolicy",
+        "autoscaling:PutLifecycleHook",
+        "autoscaling:DeleteLifecycleHook",
+        "autoscaling:DescribeAutoScalingGroups",
+        "autoscaling:DescribePolicies",
+        "autoscaling:DescribeScalingActivities",
+        "autoscaling:DescribeLaunchConfigurations",
+        "autoscaling:DescribeTags"
     ]
 
   common_tags = {

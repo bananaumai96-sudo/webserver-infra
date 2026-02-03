@@ -1,6 +1,6 @@
 # WebServer Infra - AWS Portfolio
 
-ポートフォリオ用に作成した **AWS 上での Web サーバー構築・インフラ自動化** リポジトリです（2026/2/2現在　作成中）
+ポートフォリオ用に作成した **AWS 上での Web サーバー構築・インフラ自動化** リポジトリです（2026/2/3現在　作成中）
 
 ---
 
@@ -25,7 +25,8 @@
 - EC2はPrivate Subnetに配置し、ALB経由でのみアクセス可能とすることでセキュリティを向上
 - NAT GatewayをAZごとに配置し、可用性を考慮
 - CloudFront + WAFによりエッジレイヤーでのセキュリティ対策を実施
-- Terraformの基本的なリソース定義や依存関係の理解を優先し、modulesは使用せず単一構成で実装している。ただし、将来的な再利用を考慮し、責務ごとにファイルを分割している。
+- EC2に接続する場合はセッションマネージャーを使用
+- Terraformの基本的なリソース定義や依存関係の理解を優先し、modulesは単一構成で実装している。ただし、将来的な再利用を考慮し、責務ごとにファイルを分割している
 
 ---
 
@@ -37,9 +38,10 @@
 ---
 
 ## 構成図
-この構成は、AWS上にWebサーバーを高可用性で構築し、
-CloudFrontやWAFでセキュリティを強化した構成です。
-ALBで負荷分散を行い、CloudWatchで監視しています。
+この構成は、AWS上にWebサーバーをマルチAZ配置にし、ALBで負荷分散を行い
+Auto Scaling Groupを使用することで可用性かつスケーラブルな構築にしています。
+また、CloudFrontやWAFでセキュリティを強化した構成です。
+CPU平均使用率が閾値を超えた場合、メールを送信して検知できるようにしています。
 
 [構成図](docs/architecture.png)
 
@@ -67,11 +69,12 @@ webserver-infra/
 ├─ terraform/                     # Terraform構成
 │   ├─ backend.tf                 # .tfstate保管用
 │   ├─ network.tf   　            # network作成用
-│   ├─ ec2.tf   　                # ec2作成用
 │   ├─ alb.tf   　                # alb作成用
 │   ├─ alb_listener.tf            # albリスナー作成用
 │   ├─ tg.tf   　                 # ターゲットグループ作成用
-│   ├─ data.tf      　            # 作成リソース情報取得用
+│   ├─ asg.tf   　                # Auto Scalingグループ作成用
+│   ├─ asg_policy.tf   　         # Auto Scalingポリシー作成用
+│   ├─ launch_template.tf         # 起動テンプレート作成用
 │   ├─ providers.tf 　            # リージョン用
 │   ├─ variables.tf 　            # 変数定義
 │   ├─ terraform.tfvars           # 変数値ファイル
