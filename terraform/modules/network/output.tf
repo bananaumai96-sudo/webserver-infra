@@ -14,17 +14,27 @@ output "public_subnet"{
 }
 
 output "private_subnet"{
-    description = "private_subnet_ids"
+    description = "private_subnet"
     value = aws_subnet.private
 }
 
-output "security_group_alb"{
-    description = "security_groups_alb"
-    value = aws_security_group.alb
+output "public_subnet_ids"{
+    description = "public_subnet_ids"
+    value = [for s in aws_subnet.public : s.id]
 }
 
-output "security_group_ec2"{
-    description = "security_groups_ec2"
-    value = aws_security_group.ec2_private
+output "private_subnet_ids"{
+    description = "private_subnet_ids"
+    value = [for s in aws_subnet.private : s.id]
+}
+
+output "security_group_alb_id"{
+    description = "security_groups_alb_id"
+    value = aws_security_group.alb.id
+}
+
+output "security_group_ec2_id"{
+    description = "security_groups_ec2_id"
+    value = aws_security_group.ec2_private.id
 }
 

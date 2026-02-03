@@ -15,12 +15,3 @@ resource "aws_lb_target_group" "webserver" {
 
   tags = merge(local.common_tags,{Name = "webserver-alb-tg"})
 }
-
-resource "aws_lb_target_group_attachment" "werbserver" {
-  for_each = aws_instance.webserver
-
-  target_group_arn = aws_lb_target_group.webserver.arn
-  target_id        = each.value.id
-  port             = 80
-}
-

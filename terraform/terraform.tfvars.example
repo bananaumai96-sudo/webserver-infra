@@ -26,7 +26,6 @@ web_ingress = [
 #---EC2で使用
 ami = "ami-06cce67a5893f85f9"
 instance_type = "t3.micro"
-key_pair_name = "example_key"
 root_volume_size = 10
 root_volume_type = "gp3"
 #---

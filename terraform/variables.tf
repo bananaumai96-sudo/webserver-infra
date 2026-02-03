@@ -33,11 +33,6 @@ variable "instance_type" {
   type    = string
 }
 
-variable "key_pair_name" {
-  description = "key_pair_name"
-  type    = string
-}
-
 variable "root_volume_size" {
   description = "root_volume_size"
   type    = number
