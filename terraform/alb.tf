@@ -8,7 +8,7 @@ resource "aws_lb" "webserver" {
   access_logs {
     bucket  = aws_s3_bucket.alb_log_bucket.bucket
     enabled = true
-    prefix  = "alb"
+    #prefix  = "AWSLogs/251456382610"
   }
 
   tags = merge(local.common_tags,{Name = "webserver-alb"})

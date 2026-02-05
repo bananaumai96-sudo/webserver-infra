@@ -36,6 +36,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "log_alb_bucket_lifecycle" {
   }
 }
 
+data "aws_elb_service_account" "this" {}
 resource "aws_s3_bucket_policy" "alb_logs_policy" {
   bucket = aws_s3_bucket.alb_log_bucket.id
 
@@ -45,10 +46,10 @@ resource "aws_s3_bucket_policy" "alb_logs_policy" {
       {
         Effect = "Allow"
         Principal = {
-          Service = "logging.elb.amazonaws.com"
+          AWS = data.aws_elb_service_account.this.arn
         }
         Action = "s3:PutObject"
-        Resource = "${aws_s3_bucket.alb_log_bucket.arn}/*"
+        Resource = "${aws_s3_bucket.alb_log_bucket.arn}/AWSLogs/251456382610/*"
         Condition = {
           StringEquals = {
             "s3:x-amz-acl" = "bucket-owner-full-control"
