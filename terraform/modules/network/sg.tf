@@ -4,17 +4,6 @@ resource "aws_security_group" "alb" {
   description = "Allow HTTP and SSH"
   vpc_id      = aws_vpc.webserver.id
 
-
-dynamic "ingress" {
-    for_each = var.ingress
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
-    }
-  }
-
   egress {
     protocol    = "-1"
     from_port = 0

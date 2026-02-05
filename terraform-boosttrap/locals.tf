@@ -1,5 +1,5 @@
 locals {
-    EC2_Lifecycle_Actions = [
+    EC2_Actions = [
         "ec2:RunInstances",
         "ec2:TerminateInstances",
         "ec2:StartInstances",
@@ -9,10 +9,8 @@ locals {
         "ec2:CreateLaunchTemplate",
         "ec2:DeleteLaunchTemplate",
         "ec2:ModifyInstanceAttribute",
-        "ec2:CreateLaunchTemplateVersion"
-    ]
-    
-    EC2_Describe_Actions = [
+        "ec2:CreateLaunchTemplateVersion",
+        "ec2:GetManagedPrefixListEntries",
         "ec2:DescribeImages",
         "ec2:DescribeInstanceTypes",
         "ec2:DescribeKeyPairs",
@@ -21,10 +19,9 @@ locals {
         "ec2:DescribeVolumes",
         "ec2:DescribeInstanceCreditSpecifications",
         "ec2:DescribeLaunchTemplates",
-        "ec2:DescribeLaunchTemplateVersions"
-    ]
-
-    EC2_Tagging = [
+        "ec2:DescribeLaunchTemplateVersions",
+        "ec2:DescribeManagedPrefixLists",
+        "ec2:DescribeSecurityGroupRules",
         "ec2:CreateTags",
         "ec2:DescribeTags",
         "ec2:DeleteTags"
@@ -89,14 +86,39 @@ locals {
         "ec2:DescribeAddressesAttribute"
     ]
 
-    s3_Bucket_Access_Actions = [
-        "s3:ListBucket",
-    ]
 
-    s3_Object_Access_Actions = [
+
+    s3_Actions = [
+        "s3:CreateBucket",
+        "s3:PutBucketPolicy",
+        "s3:PutBucketAcl",
+        "s3:PutEncryptionConfiguration",
+        "s3:PutLifecycleConfiguration",
+        "s3:PutBucketPublicAccessBlock",
+        "s3:PutBucketLogging",
+        "s3:HeadBucket",
+        "s3:ListBucket",
+        "s3:GetBucketLocation",
+        "s3:GetBucketTagging",
+        "s3:PutBucketTagging",
+        "s3:GetBucketPolicy",
+        "s3:GetBucketAcl",
         "s3:GetObject",
-        "s3:PutObject"
-    ]
+        "s3:PutObject",
+        "s3:GetBucketCORS",
+        "s3:GetBucketWebsite",
+        "s3:GetBucketVersioning",
+        "s3:GetAccelerateConfiguration",
+        "s3:GetBucketRequestPayment",
+        "s3:GetBucketLogging",
+        "s3:GetLifecycleConfiguration",
+        "s3:GetReplicationConfiguration",
+        "s3:GetEncryptionConfiguration",
+        "s3:GetBucketObjectLockConfiguration",
+        "s3:GetBucketPublicAccessBlock",
+        "s3:DeleteBucket",
+        "s3:DeleteObject"
+        ]
 
     elb_Actions = [
         "elasticloadbalancing:CreateLoadBalancer",
@@ -135,6 +157,30 @@ locals {
         "autoscaling:DescribeScalingActivities",
         "autoscaling:DescribeLaunchConfigurations",
         "autoscaling:DescribeTags"
+    ]
+
+    cloudfornt_Actions = [
+        "cloudfront:CreateDistribution",
+        "cloudfront:GetDistribution",
+        "cloudfront:GetDistributionConfig",
+        "cloudfront:ListDistributions",
+        "cloudfront:TagResource",
+        "cloudfront:ListTagsForResource",
+        "cloudfront:UpdateDistribution",
+        "cloudfront:DeleteDistribution"
+    ]
+
+    waf_Actions = [
+        "wafv2:CreateWebACL",
+        "wafv2:DeleteWebACL",
+        "wafv2:UpdateWebACL",
+        "wafv2:GetWebACL",
+        "wafv2:ListWebACLs",
+        "wafv2:AssociateWebACL",
+        "wafv2:DisassociateWebACL",
+        "wafv2:ListAvailableManagedRuleGroups",
+        "wafv2:DescribeManagedRuleGroup",
+        "wafv2:ListTagsForResource",
     ]
 
   common_tags = {
