@@ -89,6 +89,14 @@ data "aws_iam_policy_document" "terraform_policy" {
         actions = local.waf_Actions
         resources = ["*"]
       }
+
+      statement {
+        sid    = "snsActions"
+        effect = "Allow"
+        actions = local.sns_Actions
+        resources = ["*"]
+      }
+
 }
 
 resource "aws_iam_policy" "terraform_iam_policy" {

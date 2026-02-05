@@ -117,7 +117,11 @@ locals {
         "s3:GetBucketObjectLockConfiguration",
         "s3:GetBucketPublicAccessBlock",
         "s3:DeleteBucket",
-        "s3:DeleteObject"
+        "s3:DeleteObject",
+        "s3:PutBucketOwnershipControls",
+        "s3:GetBucketOwnershipControls",
+        "s3:DeleteBucketPolicy"
+
         ]
 
     elb_Actions = [
@@ -156,7 +160,10 @@ locals {
         "autoscaling:DescribePolicies",
         "autoscaling:DescribeScalingActivities",
         "autoscaling:DescribeLaunchConfigurations",
-        "autoscaling:DescribeTags"
+        "autoscaling:DescribeTags",
+        "autoscaling:PutNotificationConfiguration",
+        "autoscaling:DeleteNotificationConfiguration",
+        "autoscaling:DescribeNotificationConfigurations"
     ]
 
     cloudfornt_Actions = [
@@ -181,6 +188,21 @@ locals {
         "wafv2:ListAvailableManagedRuleGroups",
         "wafv2:DescribeManagedRuleGroup",
         "wafv2:ListTagsForResource",
+    ]
+
+    sns_Actions = [
+        "sns:CreateTopic",
+        "sns:DeleteTopic",
+        "sns:GetTopicAttributes",
+        "sns:SetTopicAttributes",
+        "sns:Subscribe",
+        "sns:Unsubscribe",
+        "sns:ListSubscriptionsByTopic",
+        "sns:ListTagsForResource",
+        "sns:TagResource",
+        "sns:UntagResource",
+        "sns:GetSubscriptionAttributes",
+        "sns:SetSubscriptionAttributes"
     ]
 
   common_tags = {
