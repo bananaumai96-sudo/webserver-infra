@@ -16,7 +16,7 @@ resource "aws_cloudfront_distribution" "webserver" {
 
   default_cache_behavior {
     target_origin_id       = "alb-origin"
-    viewer_protocol_policy = "redirect-to-https"
+    viewer_protocol_policy = "allow-all"
 
     allowed_methods = [
       "GET", "HEAD", "OPTIONS",
@@ -48,11 +48,9 @@ resource "aws_cloudfront_distribution" "webserver" {
   web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 
   logging_config {
-    bucket         = aws_s3_bucket.cloudfront_log_bucket.bucket_domain_name
+    bucket         = aws_s3_bucket.webserver[local.cloudfront].bucket_domain_name
     prefix         = "cloudfront/"
     include_cookies = false
   }
 
 }
-
-

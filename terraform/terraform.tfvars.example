@@ -8,15 +8,10 @@ azs = [
 
 web_ingress = [
  {
-  from_port = 22
-  to_port = 22
-  protocol = "TCP"
- }
-,
- {
   from_port = 80
   to_port = 80
   protocol = "TCP"
+  cidr_blocks = [ "0.0.0.0/0" ]
  }
 ]
 #---
@@ -26,4 +21,37 @@ ami = "ami-06cce67a5893f85f9"
 instance_type = "t3.micro"
 root_volume_size = 10
 root_volume_type = "gp3"
+#---
+
+#---asg_policyで使用
+asg_policy_type  = "TargetTrackingScaling"
+asg_metric_type = "ASGAverageCPUUtilization"
+#---
+
+#---alb用s3バケットポリシーで使用
+account_id = "example"
+#---
+
+#---snsで使用
+email = "example@gmail.com"
+#---
+
+#---s3で使用
+s3_bucket_name = {
+  alb = "werbserver-accesslogs-alb"
+  cloudfront = "werbserver-accesslogs-cloudfront"
+}
+s3_expire_days = {
+  alb = 90
+  cloudfront = 90
+}
+
+#---
+
+#---wafで使用
+web_acl_name = "cloudfront-web-acl"
+web_acl_metric_name = "cloudfront-web-acl"
+web_acl_managedcommon_metric_name = "aws-common"
+web_acl_ratelimit_limit = 1000
+web_acl_ratelimit_metric_name = "rate-limit"
 #---

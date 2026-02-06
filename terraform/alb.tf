@@ -6,9 +6,8 @@ resource "aws_lb" "webserver" {
   subnets            = module.network.public_subnet_ids
 
   access_logs {
-    bucket  = aws_s3_bucket.alb_log_bucket.bucket
+    bucket  = aws_s3_bucket.webserver[local.alb].id
     enabled = true
-    #prefix  = "AWSLogs/251456382610"
   }
 
   tags = merge(local.common_tags,{Name = "webserver-alb"})
