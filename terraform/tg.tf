@@ -5,12 +5,12 @@ resource "aws_lb_target_group" "webserver" {
   vpc_id  = module.network.vpc_id
 
   health_check {
-    path                = "/"
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 3
-    unhealthy_threshold = 3
-    matcher             = "200"
+    path                = var.tg_health_check_path
+    interval            = var.tg_health_check_interval
+    timeout             = var.tg_health_check_timeout
+    healthy_threshold   = var.tg_health_check_healthy_threshold
+    unhealthy_threshold = var.tg_health_check_unhealthy_threshold
+    matcher             = var.tg_health_check_matcher
   }
 
   tags = merge(local.common_tags,{Name = "webserver-alb-tg"})

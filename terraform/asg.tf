@@ -1,11 +1,11 @@
 resource "aws_autoscaling_group" "webserver" {
   name                      = "webserver-asg"
-  min_size                  = 2
-  max_size                  = 4
-  desired_capacity          = 2
+  min_size                  = var.asg_min_size
+  max_size                  = var.asg_max_size
+  desired_capacity          = var.asg_desired_capacity
   vpc_zone_identifier       = module.network.private_subnet_ids
   health_check_type         = "ELB"
-  health_check_grace_period = 300
+  health_check_grace_period = var.asg_health_check_grace_period
 
   launch_template {
     id      = aws_launch_template.webserver.id

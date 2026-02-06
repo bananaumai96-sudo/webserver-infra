@@ -75,6 +75,17 @@ webserver-infra/
 │   ├─ asg.tf   　                # Auto Scalingグループ作成用
 │   ├─ asg_policy.tf   　         # Auto Scalingポリシー作成用
 │   ├─ launch_template.tf         # 起動テンプレート作成用
+│   ├─ asg_notification.tf        # オートスケール失敗時通知用SNS作成用
+│   ├─ s3_acl.tf                  # CloudFront用s3_ACL作成用
+│   ├─ s3_bucket.tf               # s3バケット作成用
+│   ├─ s3_encryption.tf           # s3バケット暗号化用
+│   ├─ s3_lifecycle.tf            # s3バケットライフサイクル作成用
+│   ├─ s3_policy.tf               # s3バケットポリシー作成用
+│   ├─ s3_public_access_block.tf  # s3バケット_public_access_block作成用
+│   ├─ sg_rule_add.tf             # ALB用セキュリティグループにルール追加用
+│   ├─ sns.tf                     # SNS作成用
+│   ├─ waf.tf                     # WAF(Web-Acl)作成用
+│   ├─ data.tf                    # 作成リソースの情報取得用
 │   ├─ providers.tf 　            # リージョン用
 │   ├─ variables.tf 　            # 変数定義
 │   ├─ terraform.tfvars           # 変数値ファイル

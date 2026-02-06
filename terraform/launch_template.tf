@@ -10,7 +10,7 @@ resource "aws_launch_template" "webserver" {
       volume_size = var.root_volume_size
       volume_type = var.root_volume_type
       delete_on_termination = true     # インスタンス終了時に削除
-      encrypted             = true     # 暗号化
+      encrypted             = true
     }
   }
 
