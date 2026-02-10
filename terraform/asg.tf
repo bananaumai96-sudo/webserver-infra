@@ -3,7 +3,7 @@ resource "aws_autoscaling_group" "webserver" {
   min_size                  = var.asg_min_size
   max_size                  = var.asg_max_size
   desired_capacity          = var.asg_desired_capacity
-  vpc_zone_identifier       = module.network.private_subnet_ids
+  vpc_zone_identifier       = module.network.ec2_subnet_ids
   health_check_type         = "ELB"
   health_check_grace_period = var.asg_health_check_grace_period
 

@@ -21,34 +21,6 @@ data "aws_iam_policy_document" "terraform_policy" {
       }
 
       statement {
-        sid    = "VPCActions"
-        effect = "Allow"
-        actions = local.VPC_Actions
-        resources = ["*"]
-      }
-
-      statement {
-        sid    = "subnetActions"
-        effect = "Allow"
-        actions = local.subnet_Actions
-        resources = ["*"]
-      }
-
-      statement {
-        sid    = "sgActions"
-        effect = "Allow"
-        actions = local.sg_Actions
-        resources = ["*"]
-      }
-
-      statement {
-        sid    = "rtgActions"
-        effect = "Allow"
-        actions = local.rtb_Actions
-        resources = ["*"]
-      }
-
-      statement {
         sid    = "s3Actions"
         effect = "Allow"
         actions = local.s3_Actions
@@ -56,30 +28,9 @@ data "aws_iam_policy_document" "terraform_policy" {
       }
 
       statement {
-        sid    = "natActions"
-        effect = "Allow"
-        actions = local.nat_Actions
-        resources = ["*"]
-      }
-
-      statement {
-        sid    = "igwActions"
-        effect = "Allow"
-        actions = local.igw_Actions
-        resources = ["*"]
-      }
-
-      statement {
         sid    = "elbActions"
         effect = "Allow"
         actions = local.elb_Actions
-        resources = ["*"]
-      }
-
-      statement {
-        sid    = "eipActions"
-        effect = "Allow"
-        actions = local.eip_Actions
         resources = ["*"]
       }
 
@@ -94,6 +45,34 @@ data "aws_iam_policy_document" "terraform_policy" {
         sid    = "snsActions"
         effect = "Allow"
         actions = local.sns_Actions
+        resources = ["*"]
+      }
+
+      statement {
+        sid    = "rdsActions"
+        effect = "Allow"
+        actions = local.rds_Actions
+        resources = ["*"]
+      }
+
+      statement {
+        sid    = "iamActions"
+        effect = "Allow"
+        actions = local.iam_Actions
+        resources = ["*"]
+      }
+
+      statement {
+        sid    = "cloudwatchActions"
+        effect = "Allow"
+        actions = local.cloudwatch_Actions
+        resources = ["*"]
+      }
+
+      statement {
+        sid    = "cloudtrailActions"
+        effect = "Allow"
+        actions = local.cloudtrail_Actions
         resources = ["*"]
       }
 

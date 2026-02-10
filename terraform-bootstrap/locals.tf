@@ -24,7 +24,10 @@ locals {
         "ec2:DescribeSecurityGroupRules",
         "ec2:CreateTags",
         "ec2:DescribeTags",
-        "ec2:DeleteTags"
+        "ec2:DeleteTags",
+        "ec2:AssociateRouteTable",
+        "ec2:DisassociateRouteTable",
+        "ec2:ReplaceRouteTableAssociation"
     ]
 
     VPC_Actions = [
@@ -203,6 +206,78 @@ locals {
         "sns:UntagResource",
         "sns:GetSubscriptionAttributes",
         "sns:SetSubscriptionAttributes"
+    ]
+
+    rds_Actions = [
+        "rds:CreateDBParameterGroup",
+        "rds:ModifyDBParameterGroup",
+        "rds:DeleteDBParameterGroup",
+        "rds:CreateDBSubnetGroup",
+        "rds:ModifyDBSubnetGroup",
+        "rds:DeleteDBSubnetGroup",
+        "rds:DescribeDBParameterGroups",
+        "rds:DescribeDBSubnetGroups",
+        "rds:DescribeDBParameters",
+        "rds:AddTagsToResource",
+        "rds:RemoveTagsFromResource",
+        "rds:ListTagsForResource", 
+        "rds:CreateDBInstance",
+        "rds:DeleteDBInstance",
+        "rds:ModifyDBInstance",
+        "rds:DescribeDBInstances"
+    ]
+
+    iam_Actions = [
+        "iam:CreateRole",
+        "iam:AttachRolePolicy",
+        "iam:PassRole",
+        "iam:GetRole",
+        "iam:ListRolePolicies",
+        "iam:DeleteRole",
+        "iam:ListAttachedRolePolicies",
+        "iam:DetachRolePolicy",
+        "iam:ListInstanceProfilesForRole",
+        "iam:PutRolePolicy",
+        "iam:GetRolePolicy",
+        "iam:DeleteRolePolicy"
+    ]
+
+    cloudwatch_Actions = [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutMetricFilter",
+        "logs:PutRetentionPolicy",
+        "logs:DescribeLogGroups",
+        "logs:DeleteLogGroup",
+        "logs:ListTagsForResource",
+        "logs:PutLogEvents",
+        "logs:DescribeLogStreams",
+        "logs:DescribeMetricFilters",
+        "cloudwatch:DescribeLogGroups",
+        "cloudwatch:PutMetricFilter",
+        "cloudwatch:ListTagsForResource",
+        "logs:DeleteMetricFilter",
+        "cloudwatch:PutMetricAlarm",
+        "cloudwatch:DescribeAlarms",
+        "cloudwatch:DeleteAlarms",
+        "cloudwatch:DescribeAlarmsForMetric",
+        "cloudwatch:PutMetricData"
+    ]
+
+    cloudtrail_Actions = [
+        "cloudtrail:CreateTrail",
+        "cloudtrail:DeleteTrail",
+        "cloudtrail:UpdateTrail",
+        "cloudtrail:GetTrail",
+        "cloudtrail:DescribeTrails",
+        "cloudtrail:StartLogging",
+        "cloudtrail:StopLogging",
+        "cloudtrail:ListTags",
+        "cloudtrail:AddTags",
+        "cloudtrail:RemoveTags",
+        "cloudtrail:GetTrailStatus",
+        "cloudtrail:PutEventSelectors",
+        "cloudtrail:GetEventSelectors"
     ]
 
   common_tags = {

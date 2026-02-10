@@ -3,29 +3,19 @@ output "vpc_id"{
     value = aws_vpc.webserver.id
 }
 
-output "vpc_cidr"{
-    description = "VPC_CIDR"
-    value = aws_vpc.webserver.cidr_block
-}
-
-output "public_subnet"{
-    description = "public_subnet"
-    value = aws_subnet.public
-}
-
-output "private_subnet"{
-    description = "private_subnet"
-    value = aws_subnet.private
-}
-
 output "public_subnet_ids"{
     description = "public_subnet_ids"
-    value = [for s in aws_subnet.public : s.id]
+    value = local.public_subnet_ids
 }
 
-output "private_subnet_ids"{
+output "ec2_subnet_ids"{
     description = "private_subnet_ids"
-    value = [for s in aws_subnet.private : s.id]
+    value = local.ec2_subnet_ids
+}
+
+output "rds_subnet_ids"{
+    description = "private_subnet_ids"
+    value = local.rds_subnet_ids
 }
 
 output "security_group_alb_id"{
@@ -38,3 +28,7 @@ output "security_group_ec2_id"{
     value = aws_security_group.ec2_private.id
 }
 
+output "security_group_rds_id"{
+    description = "security_groups_rds_id"
+    value = aws_security_group.rds_private.id
+}

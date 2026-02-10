@@ -3,11 +3,6 @@ variable "cidr" {
   type        = string
 }
 
-variable "availability_zones" {
-  description = "availability_zones"
-  type        = list(string)
-}
-
 variable "tag" {
   description = "tag"
   type        = map(string)
@@ -19,4 +14,14 @@ variable "ingress" {
     to_port     = number
     protocol    = string
   }))
+}
+
+variable "module_subnets" {
+  description = "subnets"
+  type        = map(object({
+        az   = string
+        cidr = string
+        type = string
+  }))
+
 }

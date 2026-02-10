@@ -94,8 +94,17 @@ webserver-infra/
 │   ├─ s3_policy.tf                         # s3バケットポリシー作成用
 │   ├─ s3_public_access_block.tf            # s3バケット_public_access_block作成用
 │   ├─ sg_rule_add.tf                       # ALB用セキュリティグループにルール追加用
-│   ├─ sns.tf                               # SNS作成用
+│   ├─ asg_sns.tf                           # ASG用SNS作成用
+│   ├─ cloudtrail_alarm.tf                  # cloudtrailアラーム作成用
+│   ├─ cloudtrail_iam_role.tf               # cloudtrail用ロールにIAMポリシー適用
+│   ├─ cloudtrail_role.tf                   # cloudtrail用ロール作成用
+│   ├─ cloudtrail_sns.tf                    # cloudtrail用SNS作成用
+│   ├─ cloudwatch_log_group.tf              # cloudtrail用cloudwatch_log_grou作成用
+│   ├─ cloudwatch_log_metric_filter.tf      # cloudtrail用metric_filter作成用
 │   ├─ waf.tf                               # WAF(Web-Acl)作成用
+│   ├─ rds.tf                               # RDS作成用
+│   ├─ rds_sg.tf                            # RDSサブネットグループ作成用
+│   ├─ rds_pg.tf                            # RDSパラメーターグループ作成用
 │   ├─ data.tf                              # 作成リソースの情報取得用
 │   ├─ providers.tf                         # リージョン用
 │   ├─ variables.tf                         # 変数定義
@@ -119,6 +128,7 @@ webserver-infra/
              ├─attachment.tf                # ポリシーをロールにアタッチ用
              ├─locals.tf                    # 共通設定用
              ├─policy_terraform.tf          # ポリシー作成用
+             ├─policy_terraform_network.tf  # ポリシー作成用
              ├─provider.tf                  # リージョン用
              ├─role.tf                      # ロール作成用
              ├─variables.tf                 # 変数値ファイル
