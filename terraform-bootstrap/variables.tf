@@ -8,8 +8,3 @@ variable "project_name" {
   type        = string
   default     = "webserver_portfolio"
 }
-
-variable "s3_bucket" {
-  description = "s3 bucket"
-  type        = string
-}

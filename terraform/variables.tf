@@ -10,10 +10,6 @@ variable "vpc_cidr" {
   type        = string
 }
 
-variable "azs" {
-  description = "availability_zones"
-  type        = list(string)
-}
 
 variable "web_ingress" {
   type = list(object({
@@ -21,6 +17,15 @@ variable "web_ingress" {
     to_port     = number
     protocol    = string
   }))
+}
+
+variable "subnets" {
+  type = map(object({
+    az = string
+    cidr = string
+    type = string
+  }))
+  
 }
 #==================================================
 
@@ -181,3 +186,94 @@ variable "web_acl_ratelimit_metric_name" {
   type = string
 }
 #==================================================
+
+
+#rdsで使用======================================
+variable "rds_instance_class" {
+  description = "rds_instance_class"
+  type = string
+}
+
+variable "rds_allocated_storage" {
+  description = "web_acl_name"
+  type = number
+}
+
+variable "rds_password" {
+  description = "rds_password"
+  type = string
+}
+
+#============================================
+
+#cloudtrailで使用=============================
+  variable "cloudwatch_log_metric_filter" {
+  description = "cloudwatch_log_metric_filter"
+  type = map(object({
+    name = string
+    pattern = string
+    metric_name = string
+    namespace = string
+  }))
+}
+
+variable cloudtrail_comparison_operator {
+  description = "cloudtrail_comparison_operator"
+  type = string
+  default = "GreaterThanOrEqualToThreshold"
+}
+
+variable cloudtrail_evaluation_periods {
+  description = "cloudtrail_evaluation_periods"
+  type = number
+  default = 1
+}
+
+variable cloudtrail_period {
+  description = "cloudtrail_period"
+  type = number
+  default = 300
+}
+
+variable cloudtrail_statistic {
+  description = "cloudtrail_statistic"
+  type = string
+  default = "Sum"
+}
+
+variable cloudtrail_threshold {
+  description = "cloudtrail_threshold"
+  type = number
+  default = 1
+}
+
+variable "include_global_service_events" {
+  description = "include_global_service_events"
+  type    = bool
+  default = true
+}
+
+variable "is_multi_region_trail" {
+  description = "is_multi_region_trail"
+  type    = bool
+  default = true
+}
+
+variable "enable_logging" {
+  description = "enable_logging"
+  type    = bool
+  default = true
+}
+
+variable "event_selector_read_write_type" {
+  description = "event_selector_read_write_type"
+  type    = string
+  default = "All"
+}
+
+variable "event_selector_include_management_events" {
+  description = "event_selector_include_management_events"
+  type    = bool
+  default = true
+}
+#============================================
