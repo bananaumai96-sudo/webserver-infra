@@ -4,11 +4,12 @@ variable "cidr" {
 }
 
 variable "tag" {
-  description = "tag"
+  description = "共通タグ設定用"
   type        = map(string)
 }
 
 variable "ingress" {
+  description = "EC2セキュリティグループの可変ポート設定用"
   type = list(object({
     from_port   = number
     to_port     = number
@@ -17,7 +18,7 @@ variable "ingress" {
 }
 
 variable "module_subnets" {
-  description = "subnets"
+  description = "サブネット作成用"
   type        = map(object({
         az   = string
         cidr = string

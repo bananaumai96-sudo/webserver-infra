@@ -1,3 +1,6 @@
+# --- オートスケーリング用SNSトピック作成 ---
+# スケーリング異常を通知
+# メールでアラートを受信
 resource "aws_sns_topic" "asg_notifications" {
   name = "asg-notifications"
 }

@@ -1,11 +1,11 @@
-#NATゲートウェイ用Elastic IP作成
+# --- Publicサブネット（AZ単位）ごとにNAT用Elastic IPを作成 ---
 resource "aws_eip" "nat" {
   for_each = local.public_subnets
   domain = "vpc"
   tags = merge(var.tag,{Name = "webserver-eip"})
 }
 
-#NATゲートウェイ作成
+# --- Publicサブネット（AZ単位）ごとにNAT Gatewayを作成 ---
 resource "aws_nat_gateway" "webserver" {
   for_each = local.public_subnets
   

@@ -13,19 +13,22 @@ resource "aws_db_instance" "webserver" {
 
   db_subnet_group_name   = aws_db_subnet_group.webserver.name
   vpc_security_group_ids = [module.network.security_group_rds_id]
-  parameter_group_name = aws_db_parameter_group.webserver.name
+  parameter_group_name   = aws_db_parameter_group.webserver.name
 
-#マルチAZ設定(検証環境で有効にできないため無効)
+  #マルチAZ設定(検証環境で有効にできないため無効)
   multi_az = false
 
-#publicアクセスなし
+  #publicアクセスなし
   publicly_accessible = false
 
-#ture=RDS即削除（バックアップなし）,false=RDS削除時スナップショット作成
+  #ture=RDS即削除（バックアップなし）,false=RDS削除時スナップショット作成
   skip_final_snapshot = true
 
-#true=RDS削除不可,false=RDS削除可能
+  #true=RDS削除不可,false=RDS削除可能
   deletion_protection = false
 
-  tags = merge(local.common_tags,{Name = "webserver-rds"})
+  tags = merge(local.common_tags, {
+    Name   = "webserver-rds"
+    Backup = "true"
+  })
 }

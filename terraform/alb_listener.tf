@@ -1,3 +1,6 @@
+# --- ALBリスナー作成 ---
+# 80番ポートで受信
+# ターゲットグループへフォワード
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.webserver.arn
   port              = 80

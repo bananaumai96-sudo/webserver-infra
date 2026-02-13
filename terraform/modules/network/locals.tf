@@ -1,4 +1,5 @@
 locals{
+    # --- webserver用サブネットIDをTypeタグで分類し、list配列を作成 ---
     public_subnet_ids = [
         for s in aws_subnet.webserver :
         s.id if s.tags.Type == "Public"
@@ -14,6 +15,7 @@ locals{
         s.id if s.tags.Type == "rds"
     ] 
 
+    # --- webserver用サブネットをTypeタグで分類し、AZをキーとするmap(object)を作成 ---
     public_subnets = {
         for _, s in aws_subnet.webserver :
         s.availability_zone => s

@@ -1,3 +1,6 @@
+# --- オートスケーリングポリシー作成 ---
+# 指定メトリクスを一定値に維持するよう自動スケール
+# CPU使用率を基準に水平スケーリング
 resource "aws_autoscaling_policy" "asg_scale_policy" {
   name                   = "asg-scale-policy"
   autoscaling_group_name = aws_autoscaling_group.webserver.name

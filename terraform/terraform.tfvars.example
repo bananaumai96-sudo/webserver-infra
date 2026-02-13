@@ -1,10 +1,51 @@
 #---modules/mainで使用
 vpc_cidr     = "10.0.0.0/16"
 
-azs = [
-    "ap-northeast-1a",
-    "ap-northeast-1c"
-    ]
+subnets = {
+    public_ap-northeast-1a =  ({
+        az = "ap-northeast-1a"
+        cidr = "10.0.0.0/24"
+        type = "Public"
+    })
+
+    public_ap-northeast-1c =  ({
+        az = "ap-northeast-1c"
+        cidr = "10.0.1.0/24"
+        type = "Public"
+    })
+
+    ec2_ap-northeast-1a =  ({
+        az = "ap-northeast-1a"
+        cidr = "10.0.10.0/24"
+        type = "ce2"
+        backup = "true"
+    })
+
+    ec2_ap-northeast-1c =  ({
+        az = "ap-northeast-1c"
+        cidr = "10.0.11.0/24"
+        type = "ce2"
+        backup = "true"
+
+    })
+
+    rds_ap-northeast-1a =  ({
+        az = "ap-northeast-1a"
+        cidr = "10.0.20.0/24"
+        type = "rds"
+        backup = "true"
+    })
+
+    rds_ap-northeast-1c =  ({
+        az = "ap-northeast-1c"
+        cidr = "10.0.21.0/24"
+        type = "rds"
+        backup = "true"
+    })
+
+}
+
+
 
 web_ingress = [
  {

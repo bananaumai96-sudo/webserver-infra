@@ -93,7 +93,6 @@ webserver-infra/
 │   ├─ s3_lifecycle.tf                      # s3バケットライフサイクル作成用
 │   ├─ s3_policy.tf                         # s3バケットポリシー作成用
 │   ├─ s3_public_access_block.tf            # s3バケット_public_access_block作成用
-│   ├─ sg_rule_add.tf                       # ALB用セキュリティグループにルール追加用
 │   ├─ asg_sns.tf                           # ASG用SNS作成用
 │   ├─ cloudtrail_alarm.tf                  # cloudtrailアラーム作成用
 │   ├─ cloudtrail_iam_role.tf               # cloudtrail用ロールにIAMポリシー適用
