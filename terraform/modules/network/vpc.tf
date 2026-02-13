@@ -1,4 +1,4 @@
-#VPC作成
+# --- VPC作成 ---
 resource "aws_vpc" "webserver" {
   cidr_block = var.cidr
   enable_dns_support   = true

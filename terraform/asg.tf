@@ -1,3 +1,8 @@
+# --- オートスケーリンググループ作成 ---
+# マルチAZ配置により可用性を確保
+# ALB配下でトラフィック分散
+# ELBヘルスチェックによりアプリケーションレベルで異常検知
+# 起動時にtag自動付与
 resource "aws_autoscaling_group" "webserver" {
   name                      = "webserver-asg"
   min_size                  = var.asg_min_size

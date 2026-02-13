@@ -48,8 +48,8 @@ resource "aws_cloudfront_distribution" "webserver" {
   web_acl_id = aws_wafv2_web_acl.cloudfront.arn
 
   logging_config {
-    bucket         = aws_s3_bucket.webserver[local.cloudfront].bucket_domain_name
-    prefix         = "cloudfront/"
+    bucket          = aws_s3_bucket.webserver[local.cloudfront].bucket_domain_name
+    prefix          = "cloudfront/"
     include_cookies = false
   }
 

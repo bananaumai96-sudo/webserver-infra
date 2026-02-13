@@ -1,8 +1,9 @@
+# --- ターゲットグループ作成 ---
 resource "aws_lb_target_group" "webserver" {
   name     = "webserver-tg"
   port     = 80
   protocol = "HTTP"
-  vpc_id  = module.network.vpc_id
+  vpc_id   = module.network.vpc_id
 
   health_check {
     path                = var.tg_health_check_path
@@ -13,5 +14,5 @@ resource "aws_lb_target_group" "webserver" {
     matcher             = var.tg_health_check_matcher
   }
 
-  tags = merge(local.common_tags,{Name = "webserver-alb-tg"})
+  tags = merge(local.common_tags, { Name = "webserver-alb-tg" })
 }

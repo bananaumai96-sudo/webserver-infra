@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_metric_alarm" "cloudtrail_security_alarm" {
-  for_each = aws_cloudwatch_log_metric_filter.cloudtrail
+  for_each            = aws_cloudwatch_log_metric_filter.cloudtrail
   alarm_name          = each.key
   comparison_operator = var.cloudtrail_comparison_operator
   evaluation_periods  = var.cloudtrail_evaluation_periods

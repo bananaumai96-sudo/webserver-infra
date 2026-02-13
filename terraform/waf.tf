@@ -4,22 +4,22 @@ resource "aws_wafv2_web_acl" "cloudfront" {
   name  = var.web_acl_name
   scope = "CLOUDFRONT"
 
- # Web ACL 全体のデフォルトアクション
+  # Web ACL 全体のデフォルトアクション
   default_action {
     allow {}
   }
 
-# Web ACL 全体の可視性設定
+  # Web ACL 全体の可視性設定
   visibility_config {
     cloudwatch_metrics_enabled = true
     metric_name                = var.web_acl_metric_name
     sampled_requests_enabled   = true
   }
 
- # -------------------------
- # ルール1: AWS Managed Common
- # -------------------------
-rule {
+  # -------------------------
+  # ルール1: AWS Managed Common
+  # -------------------------
+  rule {
     name     = "AWSManagedCommon"
     priority = 1
 
@@ -41,29 +41,29 @@ rule {
     }
   }
 
- # -------------------------
- # ルール2: Rate Limit
- # -------------------------
-rule {
-  name     = "RateLimit"
-  priority = 10
+  # -------------------------
+  # ルール2: Rate Limit
+  # -------------------------
+  rule {
+    name     = "RateLimit"
+    priority = 10
 
-  action {
-    block {}
-  }
+    action {
+      block {}
+    }
 
-  statement {
-    rate_based_statement {
-      limit              = var.web_acl_ratelimit_limit
-      aggregate_key_type = "IP"
+    statement {
+      rate_based_statement {
+        limit              = var.web_acl_ratelimit_limit
+        aggregate_key_type = "IP"
+      }
+    }
+
+    visibility_config {
+      cloudwatch_metrics_enabled = true
+      metric_name                = var.web_acl_ratelimit_metric_name
+      sampled_requests_enabled   = true
     }
   }
-
-  visibility_config {
-    cloudwatch_metrics_enabled = true
-    metric_name                = var.web_acl_ratelimit_metric_name
-    sampled_requests_enabled   = true
-  }
-}
 
 }
