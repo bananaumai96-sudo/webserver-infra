@@ -1,3 +1,5 @@
+# --- IAMポリシー作成 ---
+# インスタンスリソース一覧
 data "aws_iam_policy_document" "terraform_policy_sv" {
   statement {
     sid       = "rdsActions"

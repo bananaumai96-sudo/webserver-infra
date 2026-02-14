@@ -1,3 +1,4 @@
+# --- CloudFront用WAF(WebACL)作成 ---
 resource "aws_wafv2_web_acl" "cloudfront" {
   provider = aws.use1
 

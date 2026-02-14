@@ -6,7 +6,7 @@ resource "aws_subnet" "webserver" {
   cidr_block = each.value.cidr
   map_public_ip_on_launch = false
   assign_ipv6_address_on_creation = false
-  tags = merge(var.tag,
+  tags = merge(var.module_tag,
     {
       Name = "webserver-${each.value.type}-subnet-${each.value.az}"
       Type = each.value.type

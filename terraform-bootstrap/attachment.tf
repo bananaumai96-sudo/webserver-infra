@@ -1,3 +1,7 @@
+# ---IAMポリシーをロールにアタッチ
+# 以下制限があるためポリシーを分けて実装
+# ロールにアタッチできるIAMポリシー10個まで
+# Jsonファイルの容量制限
 resource "aws_iam_role_policy_attachment" "terraform" {
   role       = aws_iam_role.terraform_exec.name
   policy_arn = aws_iam_policy.terraform_iam_policy.arn

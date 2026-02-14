@@ -24,7 +24,7 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.tag,{Name = "webserver-sg-alb"})
+  tags = merge(var.module_tag,{Name = "webserver-sg-alb"})
 }
 
 
@@ -37,7 +37,7 @@ resource "aws_security_group" "ec2_private" {
   vpc_id      = aws_vpc.webserver.id
 
 dynamic "ingress" {
-    for_each = var.ingress
+    for_each = var.module_ingress
     content {
       from_port   = ingress.value.from_port
       to_port     = ingress.value.to_port
@@ -53,7 +53,7 @@ dynamic "ingress" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.tag,{Name = "webserver-sg-ec2"})
+  tags = merge(var.module_tag,{Name = "webserver-sg-ec2"})
 }
 
 # --- RDS用セキュリティグループ作成 ---
@@ -77,5 +77,5 @@ ingress {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = merge(var.tag,{Name = "webserver-sg-rds"})
+  tags = merge(var.module_tag,{Name = "webserver-sg-rds"})
 }
