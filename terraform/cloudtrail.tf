@@ -1,3 +1,7 @@
+# --- CloudTrail作成 ---
+# S3に管理イベント・S3オブジェクトの操作ログを保存（監査・解析用）
+# CloudWatch Logsに管理イベントの操作ログを保存(解析・誤操作通知用）
+
 resource "aws_cloudtrail" "webserver" {
   name                          = "webserver-cloudtrail"
   s3_bucket_name                = aws_s3_bucket.webserver[local.cloudtrail].id

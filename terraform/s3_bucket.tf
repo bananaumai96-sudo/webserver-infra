@@ -1,3 +1,4 @@
+# --- S3バケット作成 ---
 resource "aws_s3_bucket" "webserver" {
   for_each = var.s3_bucket_name
   bucket   = each.value

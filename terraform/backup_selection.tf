@@ -1,3 +1,5 @@
+# ---AWS Backup selection作成---
+# Backup=true タグが付与されたリソースをバックアップ対象にする
 resource "aws_backup_selection" "webserver" {
   name         = "webserver-selection"
   plan_id      = aws_backup_plan.webserver.id

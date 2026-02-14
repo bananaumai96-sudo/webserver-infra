@@ -1,3 +1,8 @@
+# --- CloudFront ディストリビューション 作成 ---
+# originはALBを指定（Webサーバーの前段にCDNを配置）
+# WAF(Web-ACL)を関連付け
+# アクセスログをS3へ保存（監査・解析用）
+
 resource "aws_cloudfront_distribution" "webserver" {
   enabled = true
 

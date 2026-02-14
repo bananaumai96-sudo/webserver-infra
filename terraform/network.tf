@@ -1,3 +1,4 @@
+# --- ./module/networkのリソース作成 ---
 module "network" {
   source         = "./modules/network"
   cidr           = var.vpc_cidr
