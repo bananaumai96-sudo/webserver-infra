@@ -2,7 +2,7 @@
 # Internet Gateway経由で外部通信をするためのルートテーブル
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.webserver.id
-  tags = merge(var.tag,{Name = "webserver-public-route-table"})
+  tags = merge(var.module_tag,{Name = "webserver-public-route-table"})
 
 }
 
@@ -25,7 +25,7 @@ resource "aws_route_table_association" "public" {
 resource "aws_route_table" "ec2" {
   for_each = local.ec2_subnets
   vpc_id = aws_vpc.webserver.id
-  tags = merge(var.tag,{Name = "webserver-ec2-route-table-${each.value.availability_zone}"})
+  tags = merge(var.module_tag,{Name = "webserver-ec2-route-table-${each.value.availability_zone}"})
 
 }
 
@@ -48,7 +48,7 @@ resource "aws_route_table_association" "ec2" {
 # RDSはインターネットに出る必要がないため、外部向けルートは設定しない
 resource "aws_route_table" "rds" {
   vpc_id = aws_vpc.webserver.id
-  tags = merge(var.tag,{Name = "webserver-rds-route-table"})
+  tags = merge(var.module_tag,{Name = "webserver-rds-route-table"})
 
 }
 

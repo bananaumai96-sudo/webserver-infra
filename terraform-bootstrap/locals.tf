@@ -1,3 +1,4 @@
+# --- IAMポリシーのAction一覧 ---
 locals {
   EC2_Actions = [
     "ec2:RunInstances",

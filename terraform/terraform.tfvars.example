@@ -1,145 +1,178 @@
-#---modules/mainで使用
-vpc_cidr     = "10.0.0.0/16"
+# --- modules/main ---
+vpc_cidr = "10.0.0.0/16"
 
 subnets = {
-    public_ap-northeast-1a =  ({
-        az = "ap-northeast-1a"
-        cidr = "10.0.0.0/24"
-        type = "Public"
-    })
+  public_ap-northeast-1a = ({
+    az   = "ap-northeast-1a"
+    cidr = "10.0.0.0/24"
+    type = "Public"
+  })
 
-    public_ap-northeast-1c =  ({
-        az = "ap-northeast-1c"
-        cidr = "10.0.1.0/24"
-        type = "Public"
-    })
+  public_ap-northeast-1c = ({
+    az   = "ap-northeast-1c"
+    cidr = "10.0.1.0/24"
+    type = "Public"
+  })
 
-    ec2_ap-northeast-1a =  ({
-        az = "ap-northeast-1a"
-        cidr = "10.0.10.0/24"
-        type = "ce2"
-        backup = "true"
-    })
+  ec2_ap-northeast-1a = ({
+    az   = "ap-northeast-1a"
+    cidr = "10.0.10.0/24"
+    type = "ec2"
+  })
 
-    ec2_ap-northeast-1c =  ({
-        az = "ap-northeast-1c"
-        cidr = "10.0.11.0/24"
-        type = "ce2"
-        backup = "true"
+  ec2_ap-northeast-1c = ({
+    az   = "ap-northeast-1c"
+    cidr = "10.0.11.0/24"
+    type = "ec2"
 
-    })
+  })
 
-    rds_ap-northeast-1a =  ({
-        az = "ap-northeast-1a"
-        cidr = "10.0.20.0/24"
-        type = "rds"
-        backup = "true"
-    })
+  rds_ap-northeast-1a = ({
+    az   = "ap-northeast-1a"
+    cidr = "10.0.20.0/24"
+    type = "rds"
+  })
 
-    rds_ap-northeast-1c =  ({
-        az = "ap-northeast-1c"
-        cidr = "10.0.21.0/24"
-        type = "rds"
-        backup = "true"
-    })
+  rds_ap-northeast-1c = ({
+    az   = "ap-northeast-1c"
+    cidr = "10.0.21.0/24"
+    type = "rds"
+  })
 
 }
-
-
 
 web_ingress = [
- {
-  from_port = 80
-  to_port = 80
-  protocol = "TCP"
-  cidr_blocks = [ "0.0.0.0/0" ]
- }
+  {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "TCP"
+  }
+  {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "TCP"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 ]
-#---
 
-#---EC2で使用
-ami = "ami-06cce67a5893f85f9"
-instance_type = "t3.micro"
+# --- modules/main ---
+
+# --- Launch_Template --- 
+ami              = "ami-06cce67a5893f85f9"
+instance_type    = "t3.micro"
 root_volume_size = 10
 root_volume_type = "gp3"
-#---
 
-#---asg_policyで使用
-asg_policy_type  = "TargetTrackingScaling"
+# --- Launch_Template --- 
+
+
+# --- Auto Scaling Group --- 
+asg_policy_type = "TargetTrackingScaling"
 asg_metric_type = "ASGAverageCPUUtilization"
-#---
+asg_min_size         = 2
+asg_max_size         = 4
+asg_desired_capacity = 2
+sg_target_value = 50
+asg_health_check_grace_period = 300
 
-#---alb用s3バケットポリシーで使用
-account_id = "example"
-#---
+# --- Auto Scaling Group --- 
 
-#---snsで使用
-email = "example@gmail.com"
-#---
+# --- アカウントID ---
+account_id = "111122223333"
 
-#---s3で使用
+# --- アカウントID ---
+
+# --- e-mailアドレス --- 
+email = "example@example.com"
+
+# --- e-mailアドレス --- 
+
+# --- ターゲットグループ --- 
+tg_health_check_path = "/"
+
+# --- ターゲットグループ --- 
+
+
+# --- S3 --- 
 s3_bucket_name = {
-  alb = "werbserver-accesslogs-alb"
-  cloudfront = "werbserver-accesslogs-cloudfront"
+  alb        = "example-accesslogs-alb"
+  cloudfront = "example-accesslogs-cloudfront"
+  cloudtrail = "example-cloudtrail"
 }
+
 s3_expire_days = {
-  alb = 90
+  alb        = 90
   cloudfront = 90
+  cloudtrail = 90
 }
 
-#---
+# --- S3 --- 
 
-#---wafで使用
-web_acl_name = "cloudfront-web-acl"
-web_acl_metric_name = "cloudfront-web-acl"
+# --- WAF(WebACL) --- 
+web_acl_name                      = "example-cloudfront-web-acl"
+web_acl_metric_name               = "example-cloudfront-web-acl"
 web_acl_managedcommon_metric_name = "aws-common"
-web_acl_ratelimit_limit = 1000
-web_acl_ratelimit_metric_name = "rate-limit"
-#---
+web_acl_ratelimit_limit           = 1000
+web_acl_ratelimit_metric_name     = "example-rate-limit"
 
-#---rdsで使用
-rds_instance_class = "db.t4g.micro"
+# --- WAF(WebACL) --- 
+
+# --- RDS --- 
+rds_instance_class    = "db.t4g.micro"
 rds_allocated_storage = 20
-rds_password = "password"
-#---
+rds_password          = "example"
+
+# --- RDS --- 
 
 
-#---cloudtrailで使用
-cloudwatch_log_metric_filter = {
- RootActivity ={
-  name = "RootActivity"
-  pattern = "{ $.userIdentity.type = \"Root\" && $.userIdentity.invokedBy NOT EXISTS }"
-  metric_name = "RootActivityCount"
-  namespace = "Security"
- }
+# --- CloudTrail --- 
+cloudtrail_metric_filter = {
+  RootActivity = {
+    name        = "RootActivity"
+    pattern     = "{ $.userIdentity.type = \"Root\" && $.userIdentity.invokedBy NOT EXISTS }"
+    metric_name = "RootActivityCount"
+    namespace   = "Security"
+  }
 
- IAMUserCreat ={
-  name = "IAMUserCreate"
-  pattern = "{ $.eventName = \"CreateUser\" }"
-  metric_name = "IAMUserCreateCount"
-  namespace = "Security"
- }
+  IAMUserCreat = {
+    name        = "IAMUserCreate"
+    pattern     = "{ $.eventName = \"CreateUser\" }"
+    metric_name = "IAMUserCreateCount"
+    namespace   = "Security"
+  }
 
- AccessKeyCreat ={
-  name = "AccessKeyCreate"
-  pattern = "{ $.eventName = \"CreateAccessKey\" }"
-  metric_name = "AccessKeyCreateCount"
-  namespace = "Security"
- }
+  AccessKeyCreat = {
+    name        = "AccessKeyCreate"
+    pattern     = "{ $.eventName = \"CreateAccessKey\" }"
+    metric_name = "AccessKeyCreateCount"
+    namespace   = "Security"
+  }
 
- SecurityGroupOpen ={
-  name = "SecurityGroupOpen"
-  pattern = "{ $.eventName = \"AuthorizeSecurityGroupIngress\" && $.requestParameters.ipPermissions.items.0.ipRanges.items.0.cidrIp = \"0.0.0.0/0\" }"
-  metric_name = "SecurityGroupOpenCount"
-  namespace = "Security"
- }
+  SecurityGroupOpen = {
+    name        = "SecurityGroupOpen"
+    pattern     = "{ $.eventName = \"AuthorizeSecurityGroupIngress\" && $.requestParameters.ipPermissions.items.0.ipRanges.items.0.cidrIp = \"0.0.0.0/0\" }"
+    metric_name = "SecurityGroupOpenCount"
+    namespace   = "Security"
+  }
 
- CloudTrailSto ={
-  name = "CloudTrailStop"
-  pattern =  "{ $.eventName = \"StopLogging\" }"
-  metric_name = "CloudTrailStopCount"
-  namespace = "Security"
- }
+  CloudTrailSto = {
+    name        = "CloudTrailStop"
+    pattern     = "{ $.eventName = \"StopLogging\" }"
+    metric_name = "CloudTrailStopCount"
+    namespace   = "Security"
+  }
 }
 
-#---
+# --- CloudTrail --- 
+
+# --- AWS Backup ---
+backup_plan_rule_name = "daily-backup"
+backup_lifecycle = "30"
+
+# --- AWS Backup ---
+
+# --- Cloud Watch ---
+cloudwatch_log_group_cloudtrail = 14
+cloudwatch_log_group_ec2 = 14
+
+# --- Cloud Watch ---

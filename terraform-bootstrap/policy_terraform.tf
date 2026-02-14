@@ -1,3 +1,5 @@
+# --- IAMポリシー作成 ---
+# modules・EC2・RDS以外のリソース用
 data "aws_iam_policy_document" "terraform_policy" {
   statement {
     sid       = "cloudfrontActions"
