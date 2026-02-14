@@ -1,6 +1,6 @@
 # --- ALB作成 ---
 # パブリックサブネットに配置
-# アクセスログをS3へ保存
+# アクセスログをS3へ保存（監査・解析用）
 resource "aws_lb" "webserver" {
   name               = "webserver-alb"
   

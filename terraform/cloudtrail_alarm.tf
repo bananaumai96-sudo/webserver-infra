@@ -1,3 +1,11 @@
+# --- CloudTrail用CloudWatch Alarm作成 ---
+# 以下の誤操作時SNSにて通知
+# -rootユーザー使用
+# -IAMユーザー作成
+# -アクセスキー作成
+# -セキュリティグループのインバウンドルールを全開放で作成
+# -CloudTrail停止
+
 resource "aws_cloudwatch_metric_alarm" "cloudtrail_security_alarm" {
   for_each            = aws_cloudwatch_log_metric_filter.cloudtrail
   alarm_name          = each.key

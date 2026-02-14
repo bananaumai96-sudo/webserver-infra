@@ -1,3 +1,4 @@
+# --- CloudFront用S3バケット ACL設定 ---
 resource "aws_s3_bucket_ownership_controls" "cloudfront_logs" {
   bucket = aws_s3_bucket.webserver[local.cloudfront].id
 

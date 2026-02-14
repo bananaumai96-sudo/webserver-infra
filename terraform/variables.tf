@@ -297,3 +297,18 @@ variable "backup_schedule" {
 }
 
 # --- AWS Backup ---
+
+# --- Cloud Watch ---
+variable "cloudwatch_log_group_cloudtrail" {
+  description = "tg_health_check_interval"
+  type        = number
+  default     = 14
+}
+
+variable "cloudwatch_log_group_ec2" {
+  description = "tg_health_check_interval"
+  type        = number
+  default     = 14
+}
+
+# --- Cloud Watch ---
