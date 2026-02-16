@@ -2,10 +2,10 @@
 # パブリックサブネットに配置
 # アクセスログをS3へ保存（監査・解析用）
 resource "aws_lb" "webserver" {
-  name               = "webserver-alb"
-  
+  name = "webserver-alb"
+
   #インターネット向けにするためfalse
-  internal           = false
+  internal = false
 
   load_balancer_type = "application"
   security_groups    = [module.network.security_group_alb_id]

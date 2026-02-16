@@ -1,20 +1,24 @@
 locals {
+  # --- 共通タグ ---
   common_tags = {
     Project   = var.project_name
     ManagedBy = "terraform"
   }
 
+  # --- Auto Scaling Group用タグ ---
   asg_tags = merge(local.common_tags,
     {
       Name   = "webserver-ec2"
       Backup = "true"
   })
 
+  # --- S3バケットポリシー ---
   s3_policy = {
     alb = {
       Version = "2012-10-17"
       Statement = [
         {
+          Sid    = "ALBWrite"
           Effect = "Allow"
           Principal = {
             AWS = data.aws_elb_service_account.tokyo.arn
@@ -34,6 +38,7 @@ locals {
       Version = "2012-10-17"
       Statement = [
         {
+          Sid    = "CloudFrontWrite"
           Effect = "Allow"
           Principal = {
             Service = "cloudfront.amazonaws.com"
@@ -53,7 +58,7 @@ locals {
       Version = "2012-10-17"
       Statement = [
         {
-          Sid    = "AWSCloudTrailAclCheck"
+          Sid    = "CloudTrailAclCheck"
           Effect = "Allow"
           Principal = {
             Service = "cloudtrail.amazonaws.com"
@@ -62,7 +67,7 @@ locals {
           Resource = aws_s3_bucket.webserver[local.cloudtrail].arn
         },
         {
-          Sid    = "AWSCloudTrailWrite"
+          Sid    = "CloudTrailWrite"
           Effect = "Allow"
           Principal = {
             Service = "cloudtrail.amazonaws.com"
@@ -79,31 +84,35 @@ locals {
     }
   }
 
+  # --- AWS Backup用 信頼ポリシー ---
   backup_role = {
     Version = "2012-10-17"
     Statement = [{
-      Sid    = "AWSbackupAssume"
+      Sid    = "AWSBackupService"
       Effect = "Allow"
-      Action = "sts:AssumeRole"
       Principal = {
         Service = "backup.amazonaws.com"
       }
+      Action = "sts:AssumeRole"
     }]
   }
 
+  # --- EC2用 信頼ポリシー ---
   ec2_role = {
     Version = "2012-10-17",
     Statement = [
       {
-        Action = "sts:AssumeRole"
+        Sid    = "EC2Service"
         Effect = "Allow"
         Principal = {
           Service = "ec2.amazonaws.com"
         }
+        Action = "sts:AssumeRole"
       }
     ]
   }
 
+  # --- EC2用 許可ポリシー ---
   ec2_policy = {
     Version = "2012-10-17",
     Statement = [
@@ -112,18 +121,19 @@ locals {
         Action = [
           "logs:CreateLogStream",
           "logs:PutLogEvents",
-          "logs:CreateLogGroup",
           "logs:DescribeLogStreams"
         ]
-        Resource = "*"
+        Resource = "${aws_cloudwatch_log_group.ec2.arn}:*"
       }
     ]
   }
 
+  # --- S3バケット用Key ---
   alb        = "alb"
   cloudfront = "cloudfront"
   cloudtrail = "cloudtrail"
 
+  # --- CloudTrail用 信頼ポリシー
   cloudtrail_role_policy = {
     Version = "2012-10-17"
     Statement = [{
@@ -135,6 +145,7 @@ locals {
     }]
   }
 
+  # --- CloudTrail用 許可ポリシー
   cloudtrail_iam_policy = {
     Version = "2012-10-17"
     Statement = [{
@@ -147,6 +158,7 @@ locals {
     }]
   }
 
+  # --- EC2用ユーザーデータ
   ec2_user_data = <<EOF
 #!/bin/bash
 

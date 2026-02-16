@@ -27,7 +27,7 @@ resource "aws_db_instance" "webserver" {
   parameter_group_name   = aws_db_parameter_group.webserver.name
 
 
-  multi_az = false
+  multi_az            = false
   publicly_accessible = false
   skip_final_snapshot = true
   deletion_protection = false
