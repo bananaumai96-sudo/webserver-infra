@@ -3,10 +3,10 @@
 # CloudWatch Logsに管理イベントの操作ログを保存(解析・誤操作通知用）
 
 resource "aws_cloudtrail" "webserver" {
-  name                          = "webserver-cloudtrail"
-  s3_bucket_name                = aws_s3_bucket.webserver[local.cloudtrail].id
+  name           = "webserver-cloudtrail"
+  s3_bucket_name = aws_s3_bucket.webserver[local.cloudtrail].id
 
-    depends_on = [
+  depends_on = [
     aws_s3_bucket_policy.s3_logs_policy
   ]
 
