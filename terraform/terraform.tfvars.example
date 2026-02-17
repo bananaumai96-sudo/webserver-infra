@@ -46,12 +46,11 @@ web_ingress = [
     from_port   = 80
     to_port     = 80
     protocol    = "TCP"
-  }
+  },
   {
     from_port   = 443
     to_port     = 443
     protocol    = "TCP"
-    cidr_blocks = ["0.0.0.0/0"]
   }
 ]
 
@@ -72,7 +71,7 @@ asg_metric_type = "ASGAverageCPUUtilization"
 asg_min_size         = 2
 asg_max_size         = 4
 asg_desired_capacity = 2
-sg_target_value = 50
+asg_target_value = 50
 asg_health_check_grace_period = 300
 
 # --- Auto Scaling Group --- 
@@ -171,8 +170,15 @@ backup_lifecycle = "30"
 
 # --- AWS Backup ---
 
-# --- Cloud Watch ---
-cloudwatch_log_group_cloudtrail = 14
-cloudwatch_log_group_ec2 = 14
+# --- CloudWatch LogGroup ---
+cloudtrail_log_retention_in_days = 14
+ec2_log_retention_in_days = 14
+rds_error_log_retention_in_days = 30
+rds_slowquery_log_retention_in_days = 30
 
-# --- Cloud Watch ---
+# --- CloudWatch LogGroup ---
+
+# --- DNS ---
+domain_name = example.com
+
+# --- DNS ---

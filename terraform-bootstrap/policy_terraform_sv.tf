@@ -16,8 +16,8 @@ data "aws_iam_policy_document" "terraform_policy_sv" {
   }
 }
 
-resource "aws_iam_policy" "terraform_sv_iam_policy" {
-  name   = "terraform_sv_iam_policy"
+resource "aws_iam_policy" "terraform_sv_policy" {
+  name   = "terraform_sv_policy"
   policy = data.aws_iam_policy_document.terraform_policy_sv.json
-  tags   = merge(local.common_tags, { Name = "webserver-terraform-terraform-policy_sv" })
+  tags   = merge(local.common_tags, { Name = "webserver-terraform-sv-policy" })
 }

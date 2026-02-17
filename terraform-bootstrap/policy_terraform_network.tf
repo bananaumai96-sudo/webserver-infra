@@ -1,6 +1,6 @@
 # --- IAMポリシー作成 ---
 # modulesリソース一覧
-data "aws_iam_policy_document" "terraform_policy_network" {
+data "aws_iam_policy_document" "terraform_network_policy" {
   statement {
     sid       = "VPCActions"
     effect    = "Allow"
@@ -51,8 +51,8 @@ data "aws_iam_policy_document" "terraform_policy_network" {
   }
 }
 
-resource "aws_iam_policy" "terraform_network_iam_policy" {
-  name   = "terraform_network_iam_policy"
-  policy = data.aws_iam_policy_document.terraform_policy_network.json
-  tags   = merge(local.common_tags, { Name = "webserver-terraform-terraform-network-policy" })
+resource "aws_iam_policy" "terraform_network_policy" {
+  name   = "terraform_network_policy"
+  policy = data.aws_iam_policy_document.terraform_network_policy.json
+  tags   = merge(local.common_tags, { Name = "webserver-terraform-network-policy" })
 }

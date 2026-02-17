@@ -7,14 +7,14 @@ data "aws_ec2_managed_prefix_list" "cloudfront" {
 # --- ALB用セキュリティグループ作成 ---
 resource "aws_security_group" "alb" {
   name        = "werbserver-sg-alb"
-  description = "Allow HTTP from CloudFront"
+  description = "Allow from CloudFront"
   vpc_id      = aws_vpc.webserver.id
 
   ingress {
-      from_port   = 80
-      to_port     = 80
+      from_port   = 443
+      to_port     = 443
       protocol    = "TCP"
-        prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudfront.id]
+      prefix_list_ids = [data.aws_ec2_managed_prefix_list.cloudfront.id]
   }
 
   egress {
@@ -33,7 +33,7 @@ resource "aws_security_group" "alb" {
 # 可変ポート対応のため dynamic block を使用
 resource "aws_security_group" "ec2_private" {
   name        = "werbserver-sg-ec2"
-  description = "Allow sg-alb"
+  description = "Allow from ALB"
   vpc_id      = aws_vpc.webserver.id
 
 dynamic "ingress" {
@@ -60,7 +60,7 @@ dynamic "ingress" {
 # DBは直接公開せず、EC2からの3306通信のみ許可
 resource "aws_security_group" "rds_private" {
   name        = "werbserver-sg-rds"
-  description = "Allow sg-ec2"
+  description = "Allow from EC2"
   vpc_id      = aws_vpc.webserver.id
 
 ingress {

@@ -28,7 +28,8 @@ locals {
     "ec2:DeleteTags",
     "ec2:AssociateRouteTable",
     "ec2:DisassociateRouteTable",
-    "ec2:ReplaceRouteTableAssociation"
+    "ec2:ReplaceRouteTableAssociation",
+    "ec2:DetachNetworkInterface"
   ]
 
   VPC_Actions = [
@@ -149,7 +150,8 @@ locals {
     "elasticloadbalancing:DescribeTags",
     "elasticloadbalancing:DescribeTargetGroupAttributes",
     "elasticloadbalancing:DescribeListenerAttributes",
-    "elasticloadbalancing:DescribeTargetHealth"
+    "elasticloadbalancing:DescribeTargetHealth",
+    "elasticloadbalancing:SetSecurityGroups"
   ]
 
   asg_Actions = [
@@ -169,7 +171,10 @@ locals {
     "autoscaling:DeleteNotificationConfiguration",
     "autoscaling:DescribeNotificationConfigurations",
     "autoscaling:CreateOrUpdateTags",
-    "autoscaling:DeleteTags"
+    "autoscaling:DeleteTags",
+    "autoscaling:DetachLoadBalancerTargetGroups",
+    "autoscaling:DescribeLoadBalancerTargetGroups",
+    "autoscaling:AttachLoadBalancerTargetGroups"
   ]
 
   cloudfornt_Actions = [
@@ -180,7 +185,20 @@ locals {
     "cloudfront:TagResource",
     "cloudfront:ListTagsForResource",
     "cloudfront:UpdateDistribution",
-    "cloudfront:DeleteDistribution"
+    "cloudfront:DeleteDistribution",
+    "cloudfront:CreateCachePolicy",
+    "cloudfront:CreateResponseHeadersPolicy",
+    "cloudfront:CreateOriginRequestPolicy",
+    "cloudfront:GetResponseHeadersPolicy",
+    "cloudfront:GetOriginRequestPolicy",
+    "cloudfront:GetCachePolicy",
+    "cloudfront:DeleteResponseHeadersPolicy",
+    "cloudfront:DeleteOriginRequestPolicy",
+    "cloudfront:DeleteCachePolicy",
+    "cloudfront:UpdateCachePolicy",
+    "cloudfront:ListOriginRequestPolicies",
+    "cloudfront:ListCachePolicies"
+
   ]
 
   waf_Actions = [
@@ -326,6 +344,25 @@ locals {
     "kms:CreateGrant",
     "kms:GenerateDataKey",
     "kms:Decrypt"
+  ]
+
+  acm_Actions = [
+    "acm:RequestCertificate",
+    "acm:AddTagsToCertificate",
+    "acm:DescribeCertificate",
+    "acm:ListTagsForCertificate",
+    "acm:DeleteCertificate"
+  ]
+
+  route53_Actions = [
+    "route53:CreateHostedZone",
+    "route53:GetChange",
+    "route53:GetHostedZone",
+    "route53:ListTagsForResource",
+    "route53:DeleteHostedZone",
+    "route53:ChangeTagsForResource",
+    "route53:ChangeResourceRecordSets",
+    "route53:ListResourceRecordSets"
   ]
 
   common_tags = {

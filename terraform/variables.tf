@@ -300,7 +300,7 @@ variable "backup_schedule" {
 
 # --- AWS Backup ---
 
-# --- CloudWatch LogGroup---
+# --- CloudWatch LogGroup ---
 variable "cloudtrail_log_retention_in_days" {
   description = "CloudTrailログの保持期間（日数）"
   type        = number
@@ -313,4 +313,24 @@ variable "ec2_log_retention_in_days" {
   default     = 14
 }
 
-# --- CloudWatch LogGroup---
+variable "rds_error_log_retention_in_days" {
+  description = "RDSエラーログの保持期間（日数）"
+  type        = number
+  default     = 30
+}
+
+variable "rds_slowquery_log_retention_in_days" {
+  description = "RDSスロークエリログの保持期間（日数）"
+  type        = number
+  default     = 30
+}
+
+# --- CloudWatch LogGroup ---
+
+# --- DNS ---
+variable "domain_name" {
+  description = "ドメイン名"
+  type        = string
+}
+
+# --- DNS ---
