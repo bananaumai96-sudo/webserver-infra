@@ -7,7 +7,7 @@ resource "aws_cloudtrail" "webserver" {
   s3_bucket_name = aws_s3_bucket.webserver[local.cloudtrail].id
 
   depends_on = [
-    aws_s3_bucket_policy.s3_logs_policy
+    aws_s3_bucket_policy.bucket_policy
   ]
 
   include_global_service_events = var.include_global_service_events

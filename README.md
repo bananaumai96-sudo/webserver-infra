@@ -59,7 +59,7 @@
 - terrafomrプロファイルにアクセスキーとシークレットキーは不要
 - terraformプロファイルにterraform-bootstrapで作成するロールを設定
 - terraformプロファイルにbaseプロファイルをソース指定
-- terraform-bootstrap/は初回のみ実行のため実行後はiam*権限を削除推奨です
+- terraform-bootstrap/は初回のみ実行のため実行後はiam*権限を削除推奨
 
 
 ## 作業用ディレクトリで実施

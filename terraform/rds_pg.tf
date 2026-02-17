@@ -20,4 +20,16 @@ resource "aws_db_parameter_group" "webserver" {
     name  = "time_zone"
     value = "Asia/Tokyo"
   }
+
+  parameter {
+    name  = "slow_query_log"
+    value = "1"
+  }
+
+    parameter {
+    name  = "long_query_time"
+    value = "1"
+  }
+
+  
 }

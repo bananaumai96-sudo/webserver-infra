@@ -32,6 +32,11 @@ resource "aws_db_instance" "webserver" {
   skip_final_snapshot = true
   deletion_protection = false
 
+  enabled_cloudwatch_logs_exports = [
+    "error",
+    "slowquery"
+  ]
+
   tags = merge(local.common_tags, {
     Name   = "webserver-rds"
     Backup = "true"

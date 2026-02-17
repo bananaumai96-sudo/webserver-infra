@@ -1,5 +1,5 @@
 # --- S3バケットポリシー設定 ---
-resource "aws_s3_bucket_policy" "s3_logs_policy" {
+resource "aws_s3_bucket_policy" "bucket_policy" {
   for_each = aws_s3_bucket.webserver
   bucket   = each.value.id
 

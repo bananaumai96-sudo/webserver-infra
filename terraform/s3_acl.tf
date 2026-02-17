@@ -1,5 +1,5 @@
 # --- CloudFront用S3バケット ACL設定 ---
-resource "aws_s3_bucket_ownership_controls" "cloudfront_logs" {
+resource "aws_s3_bucket_ownership_controls" "cloudfront_bucket" {
   bucket = aws_s3_bucket.webserver[local.cloudfront].id
 
   rule {
@@ -7,9 +7,9 @@ resource "aws_s3_bucket_ownership_controls" "cloudfront_logs" {
   }
 }
 
-resource "aws_s3_bucket_acl" "cloudfront_logs" {
+resource "aws_s3_bucket_acl" "cloudfront_bucket" {
   depends_on = [
-    aws_s3_bucket_ownership_controls.cloudfront_logs
+    aws_s3_bucket_ownership_controls.cloudfront_bucket
   ]
 
   bucket = aws_s3_bucket.webserver[local.cloudfront].id

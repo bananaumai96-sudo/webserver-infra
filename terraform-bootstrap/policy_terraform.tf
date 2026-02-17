@@ -2,13 +2,6 @@
 # modules・EC2・RDS以外のリソース用
 data "aws_iam_policy_document" "terraform_policy" {
   statement {
-    sid       = "cloudfrontActions"
-    effect    = "Allow"
-    actions   = local.cloudfornt_Actions
-    resources = ["*"]
-  }
-
-  statement {
     sid       = "asgActions"
     effect    = "Allow"
     actions   = local.asg_Actions
@@ -19,20 +12,6 @@ data "aws_iam_policy_document" "terraform_policy" {
     sid       = "s3Actions"
     effect    = "Allow"
     actions   = local.s3_Actions
-    resources = ["*"]
-  }
-
-  statement {
-    sid       = "elbActions"
-    effect    = "Allow"
-    actions   = local.elb_Actions
-    resources = ["*"]
-  }
-
-  statement {
-    sid       = "wafActions"
-    effect    = "Allow"
-    actions   = local.waf_Actions
     resources = ["*"]
   }
 
@@ -77,10 +56,25 @@ data "aws_iam_policy_document" "terraform_policy" {
     actions   = local.kms_Actions
     resources = ["*"]
   }
+
+    statement {
+    sid       = "acmActions"
+    effect    = "Allow"
+    actions   = local.acm_Actions
+    resources = ["*"]
+  }
+
+    statement {
+    sid       = "route53Actions"
+    effect    = "Allow"
+    actions   = local.route53_Actions
+    resources = ["*"]
+  }
+
 }
 
-resource "aws_iam_policy" "terraform_iam_policy" {
+resource "aws_iam_policy" "terraform_policy" {
   name   = "terraform_iam_policy"
   policy = data.aws_iam_policy_document.terraform_policy.json
-  tags   = merge(local.common_tags, { Name = "webserver-terraform-terraform-policy" })
+  tags   = merge(local.common_tags, { Name = "webserver-terraform-policy" })
 }
