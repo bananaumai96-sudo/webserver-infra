@@ -26,10 +26,10 @@ resource "aws_db_parameter_group" "webserver" {
     value = "1"
   }
 
-    parameter {
+  parameter {
     name  = "long_query_time"
     value = "1"
   }
 
-  
+
 }
