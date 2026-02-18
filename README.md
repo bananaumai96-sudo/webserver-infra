@@ -7,42 +7,60 @@
 ## 目次
 - [概要](#概要)
 - [設計ポイント](#設計ポイント)
+- [制約事項](#制約事項)
 - [使用技術](#使用技術)
 - [構成図](#構成図)
 - [セットアップ](#セットアップ)
+- [Terraform認証構成](#Terraform認証構成)
 - [ディレクトリ構成](#ディレクトリ構成)
 
 ---
 
 ## 概要
 このプロジェクトでは以下を目的にAWS上でインフラを構築しています：
-- 可用性とセキュリティを意識した設計・構築を実施
+- 可用性、セキュリティ、運用を意識した設計・構築を実施
 - コストについてはユースケースやトレードオフによると考えているため基礎的な設計を実施
 - IaC（Infrastructure as Code）で再現可能な環境構築
-- 本構成は、CloudFront + ALB + Auto Scaling EC2 を中心とした高可用・セキュアなWebサーバー構成です。
+
 ---
 
 ## 設計ポイント
-- EC2はPrivate Subnetに配置し、CloudFront経由でのみアクセス可能とすることでセキュリティを向上
-- NAT GatewayをAZごとに配置し、単一AZ障害時でもPrivate Subnetからのアウトバウンド通信を維持
-- CloudFrontにWAFを設定する事によりセキュリティ対策を実施
-- WAFはAWSManagedRulesCommonRuleでSQLインジェクション、クロスサイトスクリプティング等の一般的なWEB攻撃を対策
-- RateLimitを設定しDDOS攻撃を対策
-- EC2に接続する場合はセッションマネージャーを使用
-- 障害時解析用にCloudFrontとALBのアクセスログをs3に保管
-- スケールアウト・スケールイン失敗時に検知出来るようにメールを送信できるようSNSを実装
-- Terraformの基本的なリソース定義や依存関係の理解を優先し、modulesは単一構成で実装し、将来的な再利用を考慮し、リソースごとにファイルを分割している
+- EC2のセキュリティグループはALBからの通信のみ許可し、ALBはCloudFrontからの通信のみに制限することで、オリジンへの直接アクセスを防止しセキュリティを向上
+- AWS WAFを利用し、SQLインジェクションやクロスサイトスクリプティング等の一般的なWEB攻撃を対策
+- レート制限を設定しDDOS攻撃を対策
+- ユーザー〜CloudFront〜ALB間をHTTPS通信とし、通信の暗号化とデータ保護を実現
+- NAT Gatewayを格AZに配置し、単一AZ障害時でもPrivate Subnetからのアウトバウンド通信を維持
+- EC2への運用アクセスはAWS SystemsManagerSessionManagerを利用し、踏み台サーバ不要の安全な接続を実現
+- Auto Scalingのスケールアウト/スケールイン失敗時にAmazon SNSで通知し障害検知を可能にする
+- 障害解析および監査対応のため、ログをS3およびCloudWatch Logsに転送
+- AWS Backupを利用し、タグベースの自動バックアップを実施
+- Terraformはリソース定義と依存関係の理解を優先し、モジュールは単一構成で実装。将来的な再利用を見据え、リソース単位でファイルを分割
+
+---
+
+## 制約事項
+### Free Tierアカウント制限による影響
+- **RDS**
+  - Multi-AZ構成が利用不可
+  - 本番ではMulti-AZ構成を採用予定
+
+- **認証・アクセス管理**
+  - Organizationsが利用できないためSSOによるterraform運用未対応
+  - 本番ではSSO＋IAM Roleによる安全な運用を想定
+
 ---
 
 ## 使用技術
 - **AWS**
 - **Terraform**
 - **Git / GitHub**
+
 ---
 
 ## 構成図
 
 ![構成図](docs/architecture.png)
+
 ---
 
 ## セットアップ
@@ -51,16 +69,24 @@
 - AWS CLIインストール
 - Terraformインストール
 
-### 設定
-- IAMユーザー作成(sts:AssumeRoleとiam*権限を許可し、terraform-bootstrapで作成するロールのarnをリソース指定したポリシーを付与)
-- 上記IAMユーザーのアクセスキー作成
-- AWS CLIでprofile作成（baseとterraform）
-- baseプロファイルに上記で作成したIAMユーザーのアクセスキーとシークレットキーを設定
-- terrafomrプロファイルにアクセスキーとシークレットキーは不要
-- terraformプロファイルにterraform-bootstrapで作成するロールを設定
-- terraformプロファイルにbaseプロファイルをソース指定
-- terraform-bootstrap/は初回のみ実行のため実行後はiam*権限を削除推奨
-- 証明書作成するためドメインが必要
+---
+
+## Terraform認証構成
+- IAMユーザーを作成し、以下を付与
+  - sts:AssumeRole（terraform-bootstrap ロール引受用）
+  - IAM管理権限（bootstrap時のみ）
+- アクセスキーを作成
+
+- AWS CLI プロファイル設定
+  - base: アクセスキー設定
+  - terraform:
+    - role_arn = terraform-bootstrap ロール
+    - source_profile = base
+
+- bootstrap実行後はIAM作成権限の削除を推奨
+- ACM証明書作成にはドメインが必要
+
+---
 
 ## 作業用ディレクトリで実施
 ### 初期化
@@ -71,6 +97,8 @@ terraform plan
 
 ### デプロイ
 terraform apply
+
+---
 
 # ディレクトリ構成
 ```
