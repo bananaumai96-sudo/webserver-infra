@@ -191,6 +191,11 @@ variable "web_acl_ratelimit_metric_name" {
 
 
 # --- RDS --- 
+variable "rds_id" {
+  description = "RDSインスタンス名"
+  type        = string
+}
+
 variable "rds_instance_class" {
   description = "RDSインスタンスのサイズ（例: db.t3.micro）"
   type        = string

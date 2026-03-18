@@ -117,6 +117,7 @@ web_acl_ratelimit_metric_name     = "example-rate-limit"
 # --- WAF(WebACL) --- 
 
 # --- RDS --- 
+rds_id  = "webserver-rds"
 rds_instance_class    = "db.t4g.micro"
 rds_allocated_storage = 20
 rds_password          = "example"
