@@ -158,6 +158,9 @@ locals {
     }]
   }
 
+  # --- RDSインスタンス識別子 ---
+  rds_id = "webserver-rds"
+
   # --- EC2用ユーザーデータ
   ec2_user_data = <<EOF
 #!/bin/bash

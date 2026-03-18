@@ -10,7 +10,8 @@
 # - 削除時スナップショット作成(skip_final_snapshot = false)
 # - 削除時スナップショット名（final_snapshot_identifier）
 resource "aws_db_instance" "webserver" {
-  identifier = "webserver-rds"
+  depends_on = [aws_cloudwatch_log_group.rds_error,aws_cloudwatch_log_group.rds_slowquery]
+  identifier = local.rds_id
 
   engine            = "MySql"
   engine_version    = "8.4.7"
