@@ -179,6 +179,6 @@ rds_slowquery_log_retention_in_days = 30
 # --- CloudWatch LogGroup ---
 
 # --- DNS ---
-domain_name = example.com
+domain_name = "example.com"
 
 # --- DNS ---

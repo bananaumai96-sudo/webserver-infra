@@ -1,6 +1,6 @@
 # --- RDS作成 ---
 # 検証環境向け設定
-# - マルチAZは無効 (検証アカウントでは利用不可)
+# - マルチAZは無効 (Free Tierアカウントでは利用不可)
 # - 削除可能 (deletion_protection = false)
 # - 削除時スナップショット作成不要(skip_final_snapshot = true)
 

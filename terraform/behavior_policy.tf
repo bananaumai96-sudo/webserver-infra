@@ -18,14 +18,14 @@ resource "aws_cloudfront_cache_policy" "static" {
     }
 
     headers_config {
-        header_behavior = "none"
+      header_behavior = "none"
     }
 
     query_strings_config {
       query_string_behavior = "none"
     }
     enable_accept_encoding_brotli = true
-    enable_accept_encoding_gzip =  true
+    enable_accept_encoding_gzip   = true
   }
 }
 

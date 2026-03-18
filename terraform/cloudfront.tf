@@ -7,6 +7,9 @@
 resource "aws_cloudfront_distribution" "webserver" {
   enabled = true
   aliases = ["${var.domain_name}"]
+  depends_on = [
+    aws_acm_certificate_validation.webserver_cloudfront
+  ]
 
   origin {
     domain_name = aws_lb.webserver.dns_name
@@ -31,8 +34,8 @@ resource "aws_cloudfront_distribution" "webserver" {
     ]
 
     cached_methods = ["GET", "HEAD"]
-    
-    cache_policy_id = aws_cloudfront_cache_policy.static.id
+
+    cache_policy_id            = aws_cloudfront_cache_policy.static.id
     origin_request_policy_id   = aws_cloudfront_origin_request_policy.static.id
     response_headers_policy_id = aws_cloudfront_response_headers_policy.security.id
   }
@@ -44,9 +47,9 @@ resource "aws_cloudfront_distribution" "webserver" {
   }
 
   viewer_certificate {
-    acm_certificate_arn            = aws_acm_certificate_validation.webserver_cloudfront.certificate_arn
-    ssl_support_method             = "sni-only"
-    minimum_protocol_version       = "TLSv1.2_2021"
+    acm_certificate_arn      = aws_acm_certificate_validation.webserver_cloudfront.certificate_arn
+    ssl_support_method       = "sni-only"
+    minimum_protocol_version = "TLSv1.2_2021"
   }
 
   web_acl_id = aws_wafv2_web_acl.cloudfront.arn
